@@ -1,0 +1,92 @@
+erDiagram
+    KHOA {
+        string MAKHOA PK
+        string TENKHOA
+        date NGTLAP
+        string TRGKHOA FK "Mã giáo viên"
+    }
+    
+    GIAOVIEN {
+        string MAGV PK
+        string HOTEN
+        string HOCVI
+        string HOCHAM
+        string GIOITINH
+        date NGSINH
+        date NGVL
+        float HESO
+        float MUCLUONG
+        string MAKHOA FK
+    }
+    
+    LOP {
+        string MALOP PK
+        string TENLOP
+        string TRGLOP FK "Mã học viên"
+        int SISO
+        string MAGVCN FK "Mã giáo viên"
+    }
+    
+    HOCVIEN {
+        string MAHV PK
+        string HO
+        string TEN
+        date NGSINH
+        string GIOITINH
+        string NOISINH
+        string MALOP FK
+    }
+    
+    MONHOC {
+        string MAMH PK
+        string TENMH
+        int TCLT
+        int TCTH
+        string MAKHOA FK
+    }
+    
+    DIEUKIEN {
+        string MAMH PK, FK "Môn học chính"
+        string MAMH_TRUOC PK, FK "Môn tiên quyết"
+    }
+    
+    GIANGDAY {
+        string MALOP PK, FK
+        string MAMH PK, FK
+        string MAGV FK
+        int HOCKY
+        int NAM
+        date TUNGAY
+        date DENNGAY
+    }
+    
+    KETQUATHI {
+        string MAHV PK, FK
+        string MAMH PK, FK
+        int LANTHI PK
+        date NGTHI
+        float DIEM
+        string KQUA
+    }
+
+    %% Mối quan hệ Cơ cấu Tổ chức
+    KHOA ||--o{ GIAOVIEN : "Quản lý nhân sự"
+    KHOA ||--o| GIAOVIEN : "Có Trưởng Khoa"
+    KHOA ||--o{ MONHOC : "Quản lý chuyên môn"
+    
+    %% Mối quan hệ Lớp và Học viên
+    GIAOVIEN ||--o{ LOP : "Làm Chủ nhiệm"
+    LOP ||--o{ HOCVIEN : "Bao gồm"
+    LOP ||--o| HOCVIEN : "Có Lớp trưởng"
+    
+    %% Mối quan hệ Môn học và Điều kiện
+    MONHOC ||--o{ DIEUKIEN : "Yêu cầu"
+    MONHOC ||--o{ DIEUKIEN : "Là điều kiện của"
+    
+    %% Mối quan hệ Hoạt động (Giảng dạy & Thi cử)
+    LOP ||--o{ GIANGDAY : "Được phân công"
+    MONHOC ||--o{ GIANGDAY : "Được dạy trong"
+    GIAOVIEN ||--o{ GIANGDAY : "Phụ trách dạy"
+    
+    HOCVIEN ||--o{ KETQUATHI : "Có điểm thi"
+    MONHOC ||--o{ KETQUATHI : "Có kết quả"

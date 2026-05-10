@@ -1,0 +1,45 @@
+erDiagram
+    KHACHHANG {
+        string MAKH PK
+        string HOTEN
+        string DCHI
+        string SODT
+        date NGSINH
+        float DOANHSO
+        date NGDK
+    }
+    
+    NHANVIEN {
+        string MANV PK
+        string HOTEN
+        date NGVL
+        string SODT
+    }
+    
+    SANPHAM {
+        string MASP PK
+        string TENSP
+        string DVT
+        string NUOCSX
+        float GIA
+    }
+    
+    HOADON {
+        string SOHD PK
+        date NGHD
+        string MAKH FK
+        string MANV FK
+        float TRIGIA
+    }
+    
+    CTHD {
+        string SOHD PK, FK
+        string MASP PK, FK
+        int SL
+    }
+
+    %% Định nghĩa các mối quan hệ (Relationships)
+    KHACHHANG ||--o{ HOADON : "Thực hiện"
+    NHANVIEN ||--o{ HOADON : "Lập"
+    HOADON ||--|{ CTHD : "Bao gồm chi tiết"
+    SANPHAM ||--o{ CTHD : "Được ghi nhận trong"
